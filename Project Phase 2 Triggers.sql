@@ -13,6 +13,7 @@ delimiter ;
 
 DELETE FROM project_file WHERE file_id = 1;
 
+
 delimiter //
 DROP TRIGGER IF EXISTS fil_bef_del //
 CREATE TRIGGER fil_bef_del BEFORE DELETE ON filament
@@ -25,17 +26,18 @@ delimiter ;
 
 DELETE FROM filament WHERE filament_id = 1;
 
-END // 
-delimiter ; 
+ 
 delimiter //
 DROP TRIGGER IF EXISTS project_bef_del //
 CREATE TRIGGER project_bef_del BEFORE DELETE ON project
 FOR EACH ROW
 BEGIN 
-            DELETE FROM project WHERE project_id = OLD.project_ID;
+            DELETE FROM printing WHERE project_id = OLD.project_ID;
 
 END // 
 delimiter ; 
+
+DELETE FROM project WHERE project_id = 1;
 
 END // 
 delimiter ; 
