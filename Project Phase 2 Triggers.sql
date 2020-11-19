@@ -6,7 +6,12 @@ DROP TRIGGER IF EXISTS file_bef_del //
 CREATE TRIGGER file_bef_del BEFORE DELETE ON project_file
 FOR EACH ROW
 BEGIN  
-            DELETE FROM project_file WHERE project_file = OLD.project_file;
+            DELETE FROM project WHERE file_id = OLD.file_ID;
+
+END // 
+delimiter ; 
+
+DELETE FROM project_file WHERE file_id = 1;
 
 END // 
 delimiter ; 
