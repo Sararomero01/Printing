@@ -96,11 +96,11 @@ delimiter ;
 
 delimiter //
 DROP TRIGGER IF EXISTS preprint_bef_ins //
-CREATE TRIGGER preprint_bef_ins BEFORE INSERT ON preprint
+CREATE TRIGGER preprint_bef_ins BEFORE INSERT ON pre_printing
 FOR EACH ROW
 BEGIN
         IF EXISTS (SELECT * FROM file WHERE preprint_id = NEW.preprint_id) THEN 
-            SIGNAL SQLSTATE '45004' SET MESSAGE_TEXT = 'This preprint ID already exists in preprint.'; 
+            SIGNAL SQLSTATE '45004' SET MESSAGE_TEXT = 'This preprint ID already exists in pre_printing.'; 
             END IF;
 
 END // 
