@@ -10,20 +10,6 @@ create table project_file
   primary key (file_id)
  );
 
-create table project
- (project_id smallint unsigned not null auto_increment,
-  project_name varchar(30) not null,
-  file_id smallint unsigned not null, 
-  filament_id smallint unsigned not null,
-  items_to_print int(10) not null, 
-  weight double(10, 2) not null, 
-  constraint fk_file_id foreign key(file_id)
-    references project_file(file_id),
-  constraint fk_filament_id foreign key(filament_id)
-    references filament(filament_id),
-  primary key (project_id)
- );
-
 create table filament
  (filament_id smallint unsigned not null auto_increment,
   filament_upc_code varchar(10) not null,
@@ -47,6 +33,23 @@ create table print_surface
   primary key (print_surface_id)
  );
 
+create table pre_printing
+ (preprint_id smallint unsigned not null auto_increment,
+  est_time_to_heat varchar(8) not null, 
+  est_time_extruder_to_heat varchar(8) not null, 
+  estimated_total_time varchar(8) not null,
+  primary key (preprint_id)
+);
+
+create table post_printing
+ (postprint_id smallint unsigned not null auto_increment,
+  est_time_to_cool varchar(8) not null, 
+  est_time_extruder_to_cool varchar(8) not null, 
+  actual_total_time varchar(8) not null,
+  primary key (postprint_id)
+);
+
+
 create table filament_extruder
  (filament_extruder_id smallint unsigned not null auto_increment,
   print_surface_id smallint unsigned not null, 
@@ -61,6 +64,20 @@ create table filament_extruder
   primary key (filament_extruder_id)
  );
 
+create table project
+ (project_id smallint unsigned not null auto_increment,
+  project_name varchar(30) not null,
+  file_id smallint unsigned not null, 
+  filament_id smallint unsigned not null,
+  items_to_print int(10) not null, 
+  weight double(10, 2) not null, 
+  constraint fk_file_id foreign key(file_id)
+    references project_file(file_id),
+  constraint fk_filament_id foreign key(filament_id)
+    references filament(filament_id),
+  primary key (project_id)
+ );
+
 create table printing
  (print_id smallint unsigned not null auto_increment,
   project_id smallint unsigned not null,
@@ -69,9 +86,9 @@ create table printing
   filament_extruder_id smallint unsigned not null, 
   hot_end double(10,2) not null,
   build_plate double(10,2) not null,
-  start_print_time time not null, 
-  estimated_time_left time not null,
-  final_print_time time not null, 
+  start_print_time varchar(8) not null, 
+  estimated_time_left varchar(8) not null,
+  final_print_time varchar(8) not null, 
   constraint fk_project_id foreign key(project_id)
     references project(project_id),
   constraint fk_preprint_id foreign key(preprint_id)
@@ -82,25 +99,6 @@ create table printing
     references filament_extruder(filament_extruder_id),
   primary key (print_id)
 );
-  
-  
-create table pre_printing
- (preprint_id smallint unsigned not null auto_increment,
-  est_time_to_heat time not null, 
-  est_time_extruder_to_heat time not null, 
-  estimated_total_time time not null,
-  primary key (preprint_id)
-);
-
-create table post_printing
- (postprint_id smallint unsigned not null auto_increment,
-  est_time_to_cool time not null, 
-  est_time_extruder_to_cool time not null, 
-  actual_total_time time not null,
-  primary key (postprint_id)
-);
-
-
 
 
 
